@@ -61,7 +61,7 @@ public class loadInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     {
         Debug.Log("On Unity Interstitial Ads Show Complete.");
 
-        gameController.GetToken(1);
+        // gameController.GetToken(1);
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)

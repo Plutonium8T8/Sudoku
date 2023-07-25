@@ -93,6 +93,8 @@ public class GameController : MonoBehaviour
     {
         if (!sudoku.easyGameMode)
         {
+            Debug.Log(sudoku.GetTokens());
+
             if (sudoku.GetTokens() >= 1)
             {
                 sudoku.easyGameMode = true;
@@ -400,7 +402,7 @@ public class GameController : MonoBehaviour
 
     public void NewGame()
     {
-        sudoku = new SudokuMatrix(0);
+        sudoku.NewGame();
 
         selectedTile = null;
 

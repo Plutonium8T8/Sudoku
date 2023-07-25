@@ -1,5 +1,13 @@
 using System.Collections.Generic;
+using System;
+using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
+using System.Reflection;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.UI;
+using System.Threading;
 
 [System.Serializable]
 public class SudokuMatrix
@@ -16,7 +24,7 @@ public class SudokuMatrix
 
     public bool easyGameMode;
 
-    private int tokens = 0;
+    private int tokens;
 
     public int GetGameType()
     {
@@ -61,27 +69,56 @@ public class SudokuMatrix
             {
                 for (int index2 = 0; index2 < 3; index2++)
                 {
-                    for (int index3 = 0; index3 < 3; index3++)
+                    for (int index3 = 0; index3 < 1; index3++)
                     {
                         int posX = UnityEngine.Random.Range(0, 3);
                         int posY = UnityEngine.Random.Range(0, 3);
 
-                        sudoku[index1 * 3 + posX][index2 * 3 + posY] = UnityEngine.Random.Range(1, 10);
+                        int randomNumber = UnityEngine.Random.Range(1, 10);
 
-                        initialSudoku[index1 * 3 + posX][index2 * 3 + posY] = UnityEngine.Random.Range(1, 10);
+                        sudoku[index1 * 3 + posX][index2 * 3 + posY] = randomNumber;
 
                         while ( CheckColumnValidity(index1 * 3 + posX, index2 * 3 + posY).Count > 1 ||
                                CheckLineValidity(index1 * 3 + posX, index2 * 3 + posY).Count > 1 ||
                                CheckBlockValidity(index1 * 3 + posX, index2 * 3 + posY).Count > 1 )
                         {
-                            sudoku[index1 * 3 + posX][index2 * 3 + posY] = UnityEngine.Random.Range(1, 10);
+                            randomNumber = UnityEngine.Random.Range(1, 10);
 
-                            initialSudoku[index1 * 3 + posX][index2 * 3 + posY] = UnityEngine.Random.Range(1, 10);
+                            sudoku[index1 * 3 + posX][index2 * 3 + posY] = randomNumber;
                         }
                     }
                 }
             }
+
+            SolveSudoku();
+
+            for (int index1 = 0; index1 < 3; index1++)
+            {
+                for (int index2 = 0; index2 < 3; index2++)
+                {
+                    for (int index3 = 0; index3 < 6; index3++)
+                    {
+                        int posX = UnityEngine.Random.Range(0, 3);
+                        int posY = UnityEngine.Random.Range(0, 3);
+
+                        while (sudoku[index1 * 3 + posX][index2 * 3 + posY] == -1)
+                        {
+                            posX = UnityEngine.Random.Range(0, 3);
+                            posY = UnityEngine.Random.Range(0, 3);
+                        }
+
+                        sudoku[index1 * 3 + posX][index2 * 3 + posY] = -1;
+                    }
+                }
+            }
+
+            initialSudoku = sudoku;
         }
+    }
+
+    private void SolveSudoku()
+    {
+        Debug.Log(SudokuSolver.solveSudoku(sudoku, 9));
     }
 
     public List<(int, int)> CheckLineValidity(int posX, int posY)
@@ -175,8 +212,27 @@ public class SudokuMatrix
         return repeatCount;
     }
 
+    public void NewGame()
+    {
+        sudoku = new List<List<int>>();
+
+        initialSudoku = new List<List<int>>();
+
+        undoSudoku = new List<((int, int), int)>();
+
+        InstantiateSudoku();
+
+        GenerateSudoku();
+
+        timer = new Timer();
+
+        easyGameMode = false;
+    }
+
     public SudokuMatrix(int gameType)
     {
+        tokens = 0;
+
         this.gameType = gameType;
 
         sudoku = new List<List<int>>();
