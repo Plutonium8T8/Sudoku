@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -20,7 +18,7 @@ public class loadInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
         adUnitId = androidAdUnitId;
 #endif
 
-        InvokeRepeating("ShowAds", 180f, 180f);
+        InvokeRepeating("LoadAd", 180f, 180f);
     }
 
     public void LoadAd()
@@ -60,8 +58,6 @@ public class loadInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         Debug.Log("On Unity Interstitial Ads Show Complete.");
-
-        // gameController.GetToken(1);
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
@@ -72,5 +68,7 @@ public class loadInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     public void OnUnityAdsShowStart(string placementId)
     {
         Debug.Log("On Unity Interstitial Ads Show Started.");
+
+        gameController.GetToken(1);
     }
 }

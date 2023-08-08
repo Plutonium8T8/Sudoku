@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
-using UnityEngine.InputSystem.Android;
-using UnityEngine.InputSystem;
-using UnityEditor.PackageManager;
+using UnityEngine.UI;
 
 public class bannerAds : MonoBehaviour
 {
@@ -14,6 +10,8 @@ public class bannerAds : MonoBehaviour
     public string adUnitId;
 
     BannerPosition bannerPosition = BannerPosition.BOTTOM_CENTER;
+
+    //[SerializeField] Text logs;
 
     private void Start()
     {
@@ -27,7 +25,7 @@ public class bannerAds : MonoBehaviour
 
         LoadBanner();
             
-        showBannerAd();
+        //showBannerAd();
     }
 
     public void LoadBanner()
@@ -43,14 +41,14 @@ public class bannerAds : MonoBehaviour
 
     private void OnBannerLoaded()
     {
-        Debug.Log("Banner Ads Loaded.");
+        //logs.text += "Banner Ads Loaded.\n";
 
         showBannerAd();
     }
 
     private void OnBannerLoadError(string error)
     {
-        Debug.Log("Banner Ads Failed: " + error);
+        //logs.text += "Banner Ads Failed: " + error + '\n';
     }
 
     public void showBannerAd()
@@ -60,9 +58,11 @@ public class bannerAds : MonoBehaviour
             showCallback = OnBannerShown,
             clickCallback = OnBannerClicked,
             hideCallback = OnBannerHidden
-        };
+        };        
 
         Advertisement.Banner.Show(adUnitId, options);
+
+        //logs.text += "Banner Ads Showed.\n";
     }
 
     private void OnBannerShown()

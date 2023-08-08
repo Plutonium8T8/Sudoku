@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 public class initializeAds : MonoBehaviour, IUnityAdsInitializationListener
 {
@@ -9,6 +8,8 @@ public class initializeAds : MonoBehaviour, IUnityAdsInitializationListener
     public string iosGameId;
 
     public bool isTestingMode = false;
+
+    //[SerializeField] Text logs;
 
     string gameId;
 
@@ -35,11 +36,11 @@ public class initializeAds : MonoBehaviour, IUnityAdsInitializationListener
 
     public void OnInitializationComplete()
     {
-        Debug.Log("Ads Initialized.");
+        //logs.text += "Ads Initialized.\n";
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
     {
-        Debug.Log("Ads Failed to Initialize: " + error);
+        //logs.text += "Ads Failed to Initialize: " + error + '\n';
     }
 }

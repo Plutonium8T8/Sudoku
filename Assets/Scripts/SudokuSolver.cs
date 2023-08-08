@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class SudokuSolver
 {
-    static int N = 9;
     public static bool isSafe(List<List<int>> board, int row, int col, int num)
     {
         for (int d = 0; d < board.Count; d++)

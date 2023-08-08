@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 public class loadRewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -12,6 +10,8 @@ public class loadRewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public string iosAdUnitId;
 
     public string adUnitId;
+
+    //[SerializeField] Text logs;
 
     void Awake()
     {
@@ -24,16 +24,16 @@ public class loadRewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public void LoadAd()
     {
-        Debug.Log("Reward Ads Loaded.");
-
         Advertisement.Load(adUnitId, this);
+
+        //logs.text += "Reward Ads Loaded.\n";
     }
 
     public void OnUnityAdsAdLoaded(string placementId)
     {
         if (placementId.Equals(adUnitId))
         {
-            Debug.Log("On Unity Reward Ads Ad Loaded.");
+            //logs.text += "On Unity Reward Ads Ad Loaded.\n";
 
             ShowAds();
         }
@@ -41,29 +41,29 @@ public class loadRewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
-        Debug.Log("On Unity Reward Ads Ad Failed: " + error);
+        //logs.text += "On Unity Reward Ads Ad Failed: " + error + '\n';
     }
 
     public void ShowAds()
     {
-        Debug.Log("Reward Ads Show Ads.");
-
         Advertisement.Show(adUnitId, this);
+
+        //logs.text += "Reward Ads Show Ads.\n";
     }
 
 
     public void OnUnityAdsShowClick(string placementId)
     {
-        Debug.Log("On Unity Reward Ads Show Clicked.");
+        //logs.text += "On Unity Reward Ads Show Clicked.\n";
 
-        gameController.GetToken(1);
+        gameController.GetToken(1); 
     }
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         if (placementId.Equals(adUnitId) && showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
         {
-            Debug.Log("On Unity Reward Ads Show Complete.");
+            //logs.text += "On Unity Reward Ads Show Complete.\n";
 
             gameController.GetToken(1);
         }
@@ -71,11 +71,13 @@ public class loadRewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
-        Debug.Log("On Unity Reward Ads Show Failed: " + error);
+        //logs.text += "On Unity Reward Ads Show Failed: " + error + '\n';
     }
 
     public void OnUnityAdsShowStart(string placementId)
     {
-        Debug.Log("On Unity Reward Ads Show Started.");
+        //logs.text += "On Unity Reward Ads Show Started.\n";
+
+        // gameController.GetToken(1);
     }
 }

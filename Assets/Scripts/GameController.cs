@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -34,13 +30,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private Image grid;
 
     [SerializeField] private GameObject gameOver;
-    private void Start()
+    private void Awake()
     {
+        sudoku = SaveSystem.LoadGame();
+
         Input.simulateMouseWithTouches = true;
 
-        gameOver.SetActive(false);
-
-        sudoku = SaveSystem.LoadGame();
+        gameOver.SetActive(false);        
 
         if (sudoku.GetGameType() == 0)
         {
@@ -107,7 +103,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                rewardAds.ShowAds();
+                rewardAds.LoadAd();
 
                 sudoku.easyGameMode = true;
 
@@ -192,9 +188,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause()
     {
-        Debug.Log("Quit");
+        Debug.Log("Pause");
 
         SaveSystem.SaveGame(sudoku);
     }

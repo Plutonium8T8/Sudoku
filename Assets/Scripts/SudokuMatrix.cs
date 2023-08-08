@@ -1,13 +1,5 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
-using System.Linq;
-using System.Reflection;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.UI;
-using System.Threading;
 
 [System.Serializable]
 public class SudokuMatrix

@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -11,7 +10,7 @@ public static class SaveSystem
 
         string path = Application.persistentDataPath + "/data.save";
 
-        FileStream stream = new FileStream(path, FileMode.Create);
+        FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
 
         formatter.Serialize(stream, statSystem);
 
@@ -26,7 +25,7 @@ public static class SaveSystem
         {
             BinaryFormatter formatter = new BinaryFormatter();
 
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
 
             SudokuMatrix statSystem = formatter.Deserialize(stream) as SudokuMatrix;
 
